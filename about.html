@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carpenter Zone | Custom Furniture & Professional Carpentry</title>
+  <meta name="description" content="Carpenter Zone delivers bespoke custom furniture, modular kitchens, luxury wardrobes, wooden doors, office interiors, and architectural woodworking crafted to elevate modern living." />
+  <meta name="keywords" content="carpentry, custom furniture, woodworking, modular kitchen, wooden wardrobes, solid wood dining table, interior woodwork" />
+  <link rel="canonical" href="https://carpenterzone.com" />
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Carpenter Zone | Custom Furniture & Premium Woodwork" />
+  <meta property="og:description" content="Custom Furniture • Skilled Craftsmanship • Professional Service. Built around your space, lifestyle, and vision." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1540518614846-7ede433c4550?q=80&w=1200&auto=format&fit=crop" />
+
+  <!-- Google Fonts: Playfair Display & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Inter"', 'sans-serif'],
+          },
+          colors: {
+            wood: {
+              charcoal: '#171717',
+              walnut: '#6B4226',
+              brown: '#8B5E3C',
+              darkwalnut: '#4B2D19',
+              warmbeige: '#F3EBDD',
+              cream: '#FAF8F3',
+              brass: '#B58A45',
+              brasshover: '#9E7432',
+              timber: '#3D2516',
+              sand: '#E7DFD5',
+              surface: '#FFFFFF'
+            }
+          },
+          letterSpacing: {
+            editorial: '.18em',
+            tag: '.12em'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- JSZip & FileSaver for real standalone project export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "name": "Carpenter Zone",
+    "image": "https://images.unsplash.com/photo-1540518614846-7ede433c4550?q=80&w=1200&auto=format&fit=crop",
+    "description": "Premium custom furniture, architectural woodwork, modular kitchens, and residential interior carpentry.",
+    "email": "hello@carpenterzone.com",
+    "telephone": "+91 00000 00000",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "IN"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "09:00",
+      "closes": "18:00"
+    }
+  }
+  </script>
+
+  <style>
+    /* Custom luxury woodwork design tokens */
+    body {
+      background-color: #FAF8F3;
+      color: #171717;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    .font-serif {
+      font-family: 'Playfair Display', serif;
+    }
+    /* Grain texture overlay effect */
+    .wood-texture {
+      background-image: radial-gradient(#6B4226 0.75px, transparent 0.75px), radial-gradient(#B58A45 0.75px, #171717 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+      background-color: #171717;
+    }
+    .brass-gradient {
+      background: linear-gradient(135deg, #DFCA9B 0%, #B58A45 50%, #906727 100%);
+    }
+    .walnut-gradient {
+      background: linear-gradient(180deg, rgba(23, 23, 23, 0.4) 0%, rgba(23, 23, 23, 0.92) 100%);
+    }
+    /* Hero background slider transitions */
+    .hero-slide {
+      opacity: 0;
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: scale(1.03);
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+    .hero-slide.active {
+      opacity: 0.48;
+      transform: scale(1.1);
+    }
+    /* Page switcher animations */
+    .page-view {
+      display: none;
+      animation: fadeInPage 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .page-view.active {
+      display: block;
+    }
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Card zoom & lifts */
+    .card-lift {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+    }
+    .card-lift:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -10px rgba(107, 66, 38, 0.15);
+    }
+    .img-zoom {
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .group:hover .img-zoom {
+      transform: scale(1.07);
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F3EBDD;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8B5E3C;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6B4226;
+    }
+  </style>
+</head>
+
+<body class="bg-wood-cream text-wood-charcoal antialiased flex flex-col min-h-screen selection:bg-wood-brass selection:text-white">
+ 
+  <!-- Main Header & Navigation -->
+  <header class="bg-wood-cream/95 backdrop-blur-md sticky z-40 border-b border-wood-sand transition-all duration-300 shadow-sm" id="mainHeader">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo -->
+        <div class="flex-shrink-0 flex items-center">
+          <a href="javascript:void(0)" onclick="switchPage('home')" class="group flex items-center space-x-3" aria-label="Carpenter Zone Home">
+            <div class="w-10 h-10 rounded-lg bg-wood-charcoal text-wood-brass flex items-center justify-center font-serif text-xl font-bold border border-wood-brass/40 shadow-inner group-hover:bg-wood-walnut transition-colors">
+              CZ
+            </div>
+            <div>
+              <span class="block font-serif text-2xl tracking-wider font-bold text-wood-charcoal group-hover:text-wood-walnut transition-colors leading-none">
+                CARPENTER ZONE
+              </span>
+              <span class="block text-[10px] uppercase tracking-tag text-wood-brown font-semibold mt-1">
+                Custom Furniture &bull; Wood Solutions
+              </span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+          <nav class="hidden lg:flex items-center space-x-8" aria-label="Main Navigation">
+          <a  href="index.html" class="nav-item text-sm font-semibold tracking-wide uppercase transition-colors text-wood-brass" data-nav="home">Home</a>
+          <a href="about.html" class="nav-item text-sm font-semibold tracking-wide uppercase text-wood-charcoal hover:text-wood-brass transition-colors" data-nav="about">About</a>
+          <a href="products.html" class="nav-item text-sm font-semibold tracking-wide uppercase text-wood-charcoal hover:text-wood-brass transition-colors" data-nav="products">Products</a>
+          <a href="testimonial.html"  class="nav-item text-sm font-semibold tracking-wide uppercase text-wood-charcoal hover:text-wood-brass transition-colors" data-nav="testimonial">Testimonials</a>
+          <a href="contact.html" class="nav-item text-sm font-semibold tracking-wide uppercase text-wood-charcoal hover:text-wood-brass transition-colors" data-nav="contact">Contact Us</a>
+          <a href="privacy-policy.html" class="nav-item text-sm font-semibold tracking-wide uppercase text-wood-charcoal hover:text-wood-brass transition-colors" data-nav="privacy">Privacy Policy</a>
+        </nav>
+
+        <!-- Right Side CTA button & Mobile Toggle -->
+        <div class="flex items-center space-x-4">
+          <button onclick="switchPage('contact')" class="hidden sm:inline-flex items-center px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-editorial bg-wood-walnut text-wood-warmbeige hover:bg-wood-brass hover:text-wood-charcoal transition-all shadow-md">
+            Get a Free Quote
+          </button>
+
+          <!-- Mobile Hamburger -->
+          <button onclick="toggleMobileNav()" class="lg:hidden p-2 rounded-lg text-wood-charcoal hover:text-wood-brass hover:bg-wood-warmbeige focus:outline-none" aria-label="Toggle navigation menu">
+            <svg id="hamburgerIcon" class="w-6 h-6 block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+            <svg id="closeNavIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobileDrawer" class="lg:hidden hidden bg-wood-cream border-b border-wood-sand px-6 pt-3 pb-6 space-y-3">
+      <div class="flex flex-col space-y-2">
+        <a href="javascript:void(0)" onclick="switchPage('home'); toggleMobileNav()" class="px-3 py-2 text-sm font-semibold tracking-wider uppercase text-wood-charcoal hover:bg-wood-warmbeige rounded-lg">Home (index.html)</a>
+        <a href="javascript:void(0)" onclick="switchPage('about'); toggleMobileNav()" class="px-3 py-2 text-sm font-semibold tracking-wider uppercase text-wood-charcoal hover:bg-wood-warmbeige rounded-lg">About Us (about.html)</a>
+        <a href="javascript:void(0)" onclick="switchPage('products'); toggleMobileNav()" class="px-3 py-2 text-sm font-semibold tracking-wider uppercase text-wood-charcoal hover:bg-wood-warmbeige rounded-lg">Products &amp; Services (products.html)</a>
+        <a href="javascript:void(0)" onclick="switchPage('testimonial'); toggleMobileNav()" class="px-3 py-2 text-sm font-semibold tracking-wider uppercase text-wood-charcoal hover:bg-wood-warmbeige rounded-lg">Testimonials (testimonial.html)</a>
+        <a href="javascript:void(0)" onclick="switchPage('contact'); toggleMobileNav()" class="px-3 py-2 text-sm font-semibold tracking-wider uppercase text-wood-charcoal hover:bg-wood-warmbeige rounded-lg">Contact Us (contact.html)</a>
+        <a href="javascript:void(0)" onclick="switchPage('privacy'); toggleMobileNav()" class="px-3 py-2 text-sm font-semibold tracking-wider uppercase text-wood-charcoal hover:bg-wood-warmbeige rounded-lg">Privacy Policy (privacy-policy.html)</a>
+      </div>
+      <div class="pt-3 border-t border-wood-sand">
+        <button onclick="switchPage('contact'); toggleMobileNav()" class="w-full text-center py-3 rounded-full text-xs font-bold uppercase tracking-editorial bg-wood-walnut text-white hover:bg-wood-brass transition-all">
+          Get a Free Quote
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 1: INDEX.HTML (HOMEPAGE)                                             -->
+  <!-- ========================================================================= -->
+  <main id="view-home" class="page-view active flex-grow">
+    
+    <!-- Hero Section with Auto-Sliding Background Carousel -->
+    <section class="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-wood-charcoal" id="heroCarouselSection">
+      
+      <!-- Slider Background Images (Auto-rotating carousel) -->
+      <div class="absolute inset-0 overflow-hidden" id="heroSlidesContainer">
+        <!-- Slide 1: Master Craftsmanship & Hand Planing -->
+        <img src="https://images.unsplash.com/photo-1540518614846-7ede433c4550?q=80&w=2000&auto=format&fit=crop" 
+             alt="Carpenter Zone master craftsmanship woodworking and custom walnut furniture" 
+             class="hero-slide active" 
+             onerror="handleImgError(this)" 
+             loading="eager" />
+       
+      </div>
+
+      <!-- Contrast Gradient Overlay -->
+      <div class="absolute inset-0 walnut-gradient pointer-events-none"></div>
+
+      <!-- Slider Arrows (Previous & Next) -->
+      <button onclick="prevHeroSlide()" 
+              aria-label="Previous Slide" 
+              class="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-wood-charcoal/60 hover:bg-wood-brass text-wood-warmbeige hover:text-wood-charcoal backdrop-blur-md border border-white/20 flex items-center justify-center transition-all shadow-xl focus:outline-none">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+
+      <button onclick="nextHeroSlide()" 
+              aria-label="Next Slide" 
+              class="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-30 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-wood-charcoal/60 hover:bg-wood-brass text-wood-warmbeige hover:text-wood-charcoal backdrop-blur-md border border-white/20 flex items-center justify-center transition-all shadow-xl focus:outline-none">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+
+      <!-- Central Hero Content Block -->
+      <div class="relative z-20 max-w-5xl mx-auto px-6 py-20 text-center space-y-6 select-none">
+        <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full border border-wood-brass/60 bg-wood-charcoal/80 backdrop-blur-md shadow-lg">
+          <span class="w-2 h-2 rounded-full bg-wood-brass animate-ping"></span>
+          <span class="text-[11px] uppercase tracking-tag text-wood-brass font-bold">Custom Woodwork &bull; Skilled Craftsmanship &bull; Professional Service</span>
+        </div>
+
+        <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold text-white leading-tight tracking-tight drop-shadow-md">
+          Crafting Wood.<br />
+          <span class="italic font-normal text-wood-warmbeige">Creating Beautiful Spaces.</span>
+        </h1>
+
+        <p class="text-base sm:text-lg text-wood-warmbeige/90 font-light leading-relaxed max-w-2xl mx-auto drop-shadow">
+          Carpenter Zone delivers custom furniture, professional carpentry, and premium woodwork designed around your space, lifestyle, and vision.
+        </p>
+
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button onclick="switchPage('products')" class="w-full sm:w-auto px-8 py-4 rounded-full bg-wood-brass hover:bg-wood-brasshover text-wood-charcoal font-bold text-xs tracking-editorial uppercase transition-all transform hover:-translate-y-0.5 shadow-2xl">
+            Explore Our Work
+          </button>
+          <button onclick="switchPage('contact')" class="w-full sm:w-auto px-8 py-4 rounded-full border-2 border-white/60 hover:border-wood-brass text-white hover:text-wood-brass font-bold text-xs tracking-editorial uppercase transition-all backdrop-blur-sm bg-black/20 hover:bg-black/40">
+            Get a Free Quote
+          </button>
+        </div>
+
+        
+      </div>
+
+      <!-- Bottom Trust Ribbon -->
+      <div class="absolute bottom-0 inset-x-0 bg-black/50 backdrop-blur-md border-t border-white/10 py-3 hidden md:block z-20">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between text-xs text-wood-warmbeige/80">
+          <span>&bull; Precision Mortise &amp; Tenon Joinery</span>
+          <span>&bull; Sustainable Solid Hardwoods</span>
+          <span>&bull; Zero-VOC Child-Safe Finishes</span>
+          <span>&bull; Doorstep Measurement &amp; Consultation</span>
+        </div>
+      </div>
+    </section>
+
+ 
+
+    <!-- Homepage About Preview (Exactly 200 Words Content) -->
+    <section class="py-16 bg-wood-warmbeige/40 border-y border-wood-sand">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <div class="lg:col-span-6 relative">
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-white p-3 border border-wood-sand">
+              <img src="https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?q=80&w=1000&auto=format&fit=crop" 
+                   alt="Carpenter Zone master carpenter crafting custom woodwork in workshop" 
+                   class="w-full h-[460px] object-cover rounded-2xl" 
+                   onerror="handleImgError(this)" 
+                   loading="lazy" />
+              <div class="absolute bottom-6 left-6 bg-wood-charcoal/90 backdrop-blur-md text-white p-4 rounded-xl border border-wood-brass/40 max-w-xs">
+                <span class="text-[10px] uppercase tracking-tag text-wood-brass font-bold block">Artisan Workshop</span>
+                <p class="text-xs text-wood-warmbeige/90 mt-1">Every joint hand-fitted to ensure generational stability and timeless elegance.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 space-y-6">
+            <div class="inline-block text-xs uppercase tracking-editorial text-wood-brass font-bold">About Carpenter Zone</div>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-wood-charcoal leading-tight">
+              Built Around Your Space
+            </h2>
+            
+            <!-- Exact 200-word editorial preview -->
+            <p class="text-sm text-wood-charcoal/80 leading-relaxed" id="homeAboutText">
+              At Carpenter Zone, we believe woodwork should harmonize effortlessly with the rhythm of your daily life. Founded as a dedicated team of passionate artisans, timber engineers, and interior specialists, we deliver practical and stylish carpentry solutions for residences, corporate offices, boutique retail outlets, and commercial environments. Instead of relying on mass-produced furniture that compromises on room proportions or structural strength, our workshop crafts each piece around your unique layout, aesthetic preferences, and utilitarian needs. Our comprehensive expertise spans custom furniture, ergonomic modular kitchens, fitted wardrobes, architectural wooden doors, designer TV units, executive office suites, and detailed restoration projects. We hand-select premium seasoned hardwoods—including authentic Teak, rich Walnut, resilient White Oak, and high-density marine plywood—combining time-tested mortise joinery with modern micro-precision hardware. By overseeing every phase from preliminary site dimensions and 3D concept planning to precision workshop cutting, hand-sanding, eco-friendly staining, and final on-site installation, we guarantee flawless craftsmanship with no unexpected delays or hidden expenses. When you partner with Carpenter Zone, you invest in enduring comfort, structural integrity, and wood solutions purposefully built to inspire comfort, beauty, and confidence within your living spaces for decades to come.
+            </p>
+
+            <div class="pt-2">
+              <button onclick="switchPage('about')" class="px-7 py-3.5 rounded-full bg-wood-walnut hover:bg-wood-brass text-white hover:text-wood-charcoal font-bold text-xs tracking-editorial uppercase transition-all shadow-md">
+                Learn More About Us &rarr;
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+	
+	
+	<!-- Featured Services / Products Preview on Homepage -->
+	
+	<section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="text-xs uppercase tracking-editorial text-wood-brass font-bold block mb-2">Our Capabilities</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold text-wood-charcoal">Featured Carpentry Solutions</h2>
+        </div>
+        <button onclick="switchPage('products')" class="mt-4 md:mt-0 text-xs font-bold uppercase tracking-tag text-wood-walnut hover:text-wood-brass transition-colors">
+          View All 20+ Products &amp; Services →
+        </button>
+      </div>
+
+      <div id="homeFeaturedGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Injected via JavaScript from master PRODUCTS array -->
+      </div>
+    </section>
+	
+	
+	<section class="py-20 bg-wood-charcoal text-white relative overflow-hidden wood-texture">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="text-xs uppercase tracking-editorial text-wood-brass font-bold block mb-2">Process • Wood to Wonder</span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-bold">How We Work</h2>
+          <div class="w-16 h-0.5 bg-wood-brass mx-auto my-4"></div>
+          <p class="text-xs sm:text-sm text-wood-warmbeige/80">
+            From raw seasoned timber to an architectural centerpiece, discover our step-by-step woodworking journey.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Step 1 -->
+          <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden group hover:border-wood-brass/60 transition-all duration-300 card-lift">
+            <div class="relative h-44 overflow-hidden bg-black/40">
+              <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Architect and carpenter consulting on site with measuring tape and blueprints" class="w-full h-full object-cover img-zoom" onerror="handleImgError(this)" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-wood-charcoal via-transparent to-black/30"></div>
+              <span class="absolute top-3 left-3 w-8 h-8 rounded-full bg-wood-brass text-wood-charcoal font-serif font-bold text-xs flex items-center justify-center shadow-lg">01</span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-serif text-lg font-bold text-wood-warmbeige mb-2 group-hover:text-wood-brass transition-colors">Consultation</h3>
+              <p class="text-xs text-wood-warmbeige/70 leading-relaxed">
+                We visit your property to record laser measurements, examine architectural lighting, and discuss your storage ideas and vision.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden group hover:border-wood-brass/60 transition-all duration-300 card-lift">
+            <div class="relative h-44 overflow-hidden bg-black/40">
+              <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Carpentry blueprint sketches, 3D furniture modelling, and timber sample selection" class="w-full h-full object-cover img-zoom" onerror="handleImgError(this)" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-wood-charcoal via-transparent to-black/30"></div>
+              <span class="absolute top-3 left-3 w-8 h-8 rounded-full bg-wood-brass text-wood-charcoal font-serif font-bold text-xs flex items-center justify-center shadow-lg">02</span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-serif text-lg font-bold text-wood-warmbeige mb-2 group-hover:text-wood-brass transition-colors">Design &amp; Material</h3>
+              <p class="text-xs text-wood-warmbeige/70 leading-relaxed">
+                We develop functional blueprints, select matching wood grains, and recommend the best hardwood or moisture-resistant boards.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden group hover:border-wood-brass/60 transition-all duration-300 card-lift">
+            <div class="relative h-44 overflow-hidden bg-black/40">
+              <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&amp;w=600&amp;auto=format&amp;fit=crop" alt="Master carpenter hand-crafting furniture joint in woodworking atelier" class="w-full h-full object-cover img-zoom" onerror="handleImgError(this)" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-wood-charcoal via-transparent to-black/30"></div>
+              <span class="absolute top-3 left-3 w-8 h-8 rounded-full bg-wood-brass text-wood-charcoal font-serif font-bold text-xs flex items-center justify-center shadow-lg">03</span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-serif text-lg font-bold text-wood-warmbeige mb-2 group-hover:text-wood-brass transition-colors">Craftsmanship</h3>
+              <p class="text-xs text-wood-warmbeige/70 leading-relaxed">
+                Our master carpenters shape, plane, hand-join, edge-band, and apply natural stain sealers inside our controlled workshop.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="bg-white/5 border border-white/10 rounded-2xl overflow-hidden group hover:border-wood-brass/60 transition-all duration-300 card-lift">
+            <div class="relative h-44 overflow-hidden bg-black/40">
+              <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Finished custom woodwork installation inside luxury contemporary home" class="w-full h-full object-cover img-zoom" onerror="handleImgError(this)" loading="lazy">
+              <div class="absolute inset-0 bg-gradient-to-t from-wood-charcoal via-transparent to-black/30"></div>
+              <span class="absolute top-3 left-3 w-8 h-8 rounded-full bg-wood-brass text-wood-charcoal font-serif font-bold text-xs flex items-center justify-center shadow-lg">04</span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-serif text-lg font-bold text-wood-warmbeige mb-2 group-hover:text-wood-brass transition-colors">Installation</h3>
+              <p class="text-xs text-wood-warmbeige/70 leading-relaxed">
+                We deliver with protective packaging, mount with zero-mess anchoring, calibrate hinges, and complete fine finish touchups.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+	
+	
+	<footer style="background:#171717; color:#F3EBDD; padding:3rem 1.5rem; margin-top:4rem;">
+    <div style="max-w:1200px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:space-between; gap:2rem;">
+      <div>
+        <h3 style="font-family:'Playfair Display', serif; font-size:1.5rem; margin-bottom:0.5rem; color:#FFFFFF;">CARPENTER ZONE</h3>
+        <p style="font-size:0.8rem; max-width:320px; color:#F3EBDDcc;">Professional carpentry and custom woodworking solutions designed for modern spaces.</p>
+      </div>
+      <div>
+        <h4 style="font-size:0.8rem; color:#B58A45; text-transform:uppercase; margin-bottom:0.75rem;">Quick Links</h4>
+        <p style="font-size:0.8rem; line-height:1.8;">
+          <a href="index.html" style="color:#F3EBDD; text-decoration:none;">Home</a><br>
+          <a href="about.html" style="color:#F3EBDD; text-decoration:none;">About</a><br>
+          <a href="products.html" style="color:#F3EBDD; text-decoration:none;">Products</a><br>
+          <a href="testimonial.html" style="color:#F3EBDD; text-decoration:none;">Testimonials</a><br>
+          <a href="contact.html" style="color:#F3EBDD; text-decoration:none;">Contact</a><br>
+          <a href="privacy-policy.html" style="color:#F3EBDD; text-decoration:none;">Privacy Policy</a>
+        </p>
+      </div>
+      <div>
+        <h4 style="font-size:0.8rem; color:#B58A45; text-transform:uppercase; margin-bottom:0.75rem;">Contact</h4>
+        <p style="font-size:0.8rem; line-height:1.8; color:#F3EBDDcc;">
+          Email: hello@carpenterzone.com<br>
+          Phone: +91 00000 00000<br>
+          Location: India
+        </p>
+      </div>
+    </div>
+    <div style="max-w:1200px; margin:2rem auto 0; border-top:1px solid #ffffff22; padding-top:1rem; font-size:0.75rem; text-align:center; color:#F3EBDD99;">
+      &copy; 2026 Carpenter Zone. All Rights Reserved.
+    </div>
+  </footer>
+  
+    <script src="js/script.js"></script>
+
+   </script>    
+</body>
+</html>

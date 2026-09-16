@@ -1,0 +1,176 @@
+:root {
+  --wood-charcoal: #171717;
+  --wood-walnut: #6B4226;
+  --wood-brown: #8B5E3C;
+  --wood-warmbeige: #F3EBDD;
+  --wood-cream: #FAF8F3;
+  --wood-brass: #B58A45;
+  --wood-sand: #E7DFD5;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--wood-cream);
+  color: var(--wood-charcoal);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.site-header {
+  background-color: rgba(250, 248, 243, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--wood-sand);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--wood-charcoal);
+  text-decoration: none;
+}
+
+.nav-links a {
+  margin: 0 1rem;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wood-charcoal);
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--wood-brass);
+}
+
+.cta-button {
+  background-color: var(--wood-walnut);
+  color: var(--wood-warmbeige);
+  padding: 0.75rem 1.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: var(--wood-brass);
+  color: var(--wood-charcoal);
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+`);
+
+
+ /* Custom luxury woodwork design tokens */
+    body {
+      background-color: #FAF8F3;
+      color: #171717;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    .font-serif {
+      font-family: 'Playfair Display', serif;
+    }
+    /* Grain texture overlay effect */
+    .wood-texture {
+      background-image: radial-gradient(#6B4226 0.75px, transparent 0.75px), radial-gradient(#B58A45 0.75px, #171717 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+      background-color: #171717;
+    }
+    .brass-gradient {
+      background: linear-gradient(135deg, #DFCA9B 0%, #B58A45 50%, #906727 100%);
+    }
+    .walnut-gradient {
+      background: linear-gradient(180deg, rgba(23, 23, 23, 0.4) 0%, rgba(23, 23, 23, 0.92) 100%);
+    }
+    /* Hero background slider transitions */
+    .hero-slide {
+      opacity: 0;
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: scale(1.03);
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+    .hero-slide.active {
+      opacity: 0.48;
+      transform: scale(1.1);
+    }
+    /* Page switcher animations */
+    .page-view {
+      display: none;
+      animation: fadeInPage 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .page-view.active {
+      display: block;
+    }
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Card zoom & lifts */
+    .card-lift {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+    }
+    .card-lift:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 30px -10px rgba(107, 66, 38, 0.15);
+    }
+    .img-zoom {
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .group:hover .img-zoom {
+      transform: scale(1.07);
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F3EBDD;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8B5E3C;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6B4226;
+    }
